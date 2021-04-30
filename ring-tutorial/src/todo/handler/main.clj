@@ -2,14 +2,11 @@
   (:require [compojure.core :refer [defroutes GET]]
             [compojure.route :as route]
             [ring.util.response :as res]
-            [todo.util.response :as util-res]))
-
-(defn home-view [req]
-  "<h1>ホーム画面</h1>
-   <a href=\"/todo\">TODO 一覧</a>")
+            [todo.util.response :as util-res]
+            [todo.view.main :as view]))
 
 (defn home [req]
-  (-> (home-view req)
+  (-> (view/home-view req)
       res/response
       util-res/html))
 

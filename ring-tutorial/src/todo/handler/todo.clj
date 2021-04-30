@@ -2,7 +2,8 @@
   (:require [compojure.core :refer [defroutes context GET POST]]
             [compojure.route :as route]
             [ring.util.response :as res]
-            [todo.util.response :as util-res]))
+            [todo.util.response :as util-res]
+            [todo.view.todo :as view]))
 
 (def todo-list
   [{:title "朝ごはんを作る"}
@@ -10,15 +11,8 @@
    {:title "卵を買って帰る"}
    {:title "お風呂を洗う"}])
 
-(defn todo-index-view [req]
-  `("<h1>TODO 一覧</h1>"
-    "<ul>"
-    ~@(for [{:keys [title]} todo-list]
-        (str "<li>" title "</li>"))
-    "</ul>"))
-
 (defn todo-index [req]
-  (-> (todo-index-view [req])
+  (-> (view/todo-index-view req todo-list)
       res/response
       util-res/html))
 
